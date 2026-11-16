@@ -1,0 +1,34 @@
+{
+ "slides": [
+  {
+   "image": "images/events-2.jpg",
+   "alt": "Conference attendees watching a session from the audience",
+   "position": "center 50%"
+  },
+  {
+   "image": "images/events-9.jpg",
+   "alt": "Attendees viewing posters at a conference",
+   "position": "center 50%"
+  },
+  {
+   "image": "images/events-13.jpg",
+   "alt": "Performers on stage at a conference",
+   "position": "center 40%"
+  },
+  {
+   "image": "images/headshots-4.jpg",
+   "alt": "Portrait of a man sitting on a railing by the lake",
+   "position": "center 20%"
+  },
+  {
+   "image": "images/wedding-2.jpg",
+   "alt": "Couple kissing during an outdoor ceremony as guests applaud",
+   "position": "center 45%"
+  },
+  {
+   "image": "images/wedding-4.jpg",
+   "alt": "Couple smiling together in a gazebo",
+   "position": "center 55%"
+  }
+ ]
+}

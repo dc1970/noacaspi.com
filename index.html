@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noa Caspi Photography | Weddings, Events &amp; Portraits in Toronto, GTA &amp; Kingston</title>
+<meta name="description" content="Wedding, event and portrait photography in Toronto, the GTA and Kingston, Ontario.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Karla:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-title="Weddings, Events &amp; Portraits in Toronto, GTA &amp; Kingston">
+<header>
+  <a class="logo" href="index.html">Noa Caspi Photography</a>
+  <nav><a href="#about" data-t="nav_about">About</a><a href="#portfolio" data-t="nav_portfolio">Portfolio</a><a href="services.html" data-t="nav_services">Services</a><a href="#contact" data-t="nav_contact">Contact</a><a data-t="nav_instagram" data-ig href="https://instagram.com/caspiphoto">Instagram</a></nav>
+</header>
+<main>
+<!-- Carousel photos, About text and Portfolio albums are edited in /admin (or in the data/ folder). -->
+<div class="hero" id="hero" aria-roledescription="carousel" aria-label="Featured photos">
+  <div class="hero-text">
+    <p data-t="hero_text">Photographing moments &amp; people around Toronto and beyond.</p>
+    <a class="btn" href="#contact" data-t="hero_button">Inquire now</a>
+  </div>
+  <button class="ctrl prev" aria-label="Previous photo">&#8249;</button>
+  <button class="ctrl next" aria-label="Next photo">&#8250;</button>
+  <div class="dots"></div>
+</div>
+
+<section id="about" class="about">
+  <div class="portrait" role="img" aria-label="Portrait of the photographer"></div>
+  <div>
+    <h2 id="about-title">About</h2>
+    <div id="about-text"></div>
+    <p class="areas" id="about-note"></p>
+  </div>
+</section>
+
+<section id="portfolio">
+  <h2>Portfolio</h2>
+  <div class="filters" role="group" aria-label="Filter portfolio by album"></div>
+  <div class="grid"></div>
+</section>
+
+<section id="contact">
+  <h2 data-t="contact_title">How can I bring your vision to life?</h2>
+  <p style="margin-bottom:1.5rem" data-t="contact_intro">Tell me what you’re planning and I’ll reply within one business day.</p>
+  <form action="https://formsubmit.co/noa.caspi4@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="New photography inquiry">
+    <input type="hidden" name="_template" value="table">
+    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+    <div class="two">
+      <label>Your name<input name="name" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+    </div>
+    <div class="two">
+      <label>Type of session
+        <select name="session"><option>Wedding</option><option>Event</option><option>Headshots</option><option>Family session</option><option>Other portraits</option></select>
+      </label>
+      <label>Location
+        <select name="location"><option>Toronto</option><option>GTA</option><option>Kingston</option><option>Somewhere else</option></select>
+      </label>
+    </div>
+    <label>Package or special (optional)<input name="package" placeholder="e.g. Headshot mini session"></label>
+    <label>Preferred date (if you have one)<input type="date" name="date"></label>
+    <label>Tell me more<textarea name="message" rows="5" required></textarea></label>
+    <button class="btn" type="submit">Send inquiry</button>
+  </form>
+  <p class="follow">Prefer to see more first? Follow along on <a class="ig" data-ig="handle" href="https://instagram.com/caspiphoto">Instagram</a>.</p>
+</section>
+</main>
+<footer>&copy; <span id="yr"></span> <span class="biz">Noa Caspi Photography</span>. <span data-t="footer_line">Toronto, GTA &amp; Kingston.</span> <a data-ig="handle" href="https://instagram.com/caspiphoto">Instagram</a></footer>
+<script src="app.js"></script>
+</body>
+</html>

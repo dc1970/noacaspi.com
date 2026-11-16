@@ -1,0 +1,19 @@
+{
+ "specials": [
+  {
+   "title": "Headshot mini session",
+   "price": "$60",
+   "description": "15-20 minute session, 1 outfit, 3 professionally edited digital photos.",
+   "dates": "",
+   "session": "Headshots"
+  },
+  {
+   "title": "Family mini session",
+   "price": "$80",
+   "description": "25-30 minute session, 5 professionally edited digital images - perfect for holiday cards, gifts and memories!",
+   "dates": "",
+   "session": "Family session"
+  }
+ ],
+ "travel_note": "I offer location-based photography sessions across Toronto, the GTA and Kingston. We’ll work together to choose a location that suits your style, whether it is outdoors, or somewhere special to you. Travel fees may apply."
+}

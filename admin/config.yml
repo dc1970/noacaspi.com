@@ -1,0 +1,87 @@
+backend:
+  name: github
+  repo: dc1970/noacaspi.com
+  branch: main
+media_folder: "images"
+public_folder: "/images"
+collections:
+  - name: site
+    label: Site content
+    files:
+      - name: settings
+        label: Business info, About & Instagram
+        file: data/settings.json
+        fields:
+          - {name: business_name, label: Business name, widget: string}
+          - {name: instagram_handle, label: Instagram handle (no @), widget: string}
+          - {name: about_title, label: About heading, widget: string}
+          - {name: about_text, label: About text (blank line = new paragraph), widget: text}
+          - {name: about_note, label: Areas served line, widget: string}
+          - {name: about_photo, label: About photo, widget: image}
+          - {name: hero_text, label: Homepage tagline, widget: string}
+          - {name: hero_button, label: Homepage button text, widget: string}
+          - {name: contact_title, label: Contact heading, widget: string}
+          - {name: contact_intro, label: Contact intro line, widget: string}
+          - {name: inquiry_email, label: "Email that receives inquiries (after changing it, send a test so FormSubmit can verify the new address)", widget: string}
+          - {name: services_title, label: Services page heading, widget: string}
+          - {name: services_cta, label: Services page button text, widget: string}
+          - {name: footer_line, label: Footer areas line, widget: string}
+          - {name: nav_about, label: Menu label - About, widget: string}
+          - {name: nav_portfolio, label: Menu label - Portfolio, widget: string}
+          - {name: nav_services, label: Menu label - Services, widget: string}
+          - {name: nav_contact, label: Menu label - Contact, widget: string}
+          - {name: nav_instagram, label: Menu label - Instagram, widget: string}
+      - name: theme
+        label: Theme (colours & fonts)
+        file: data/theme.json
+        fields:
+          - {name: background, label: "Background colour (keep it very different from the text colour so everything stays readable)", widget: color}
+          - {name: text, label: Text colour, widget: color}
+          - {name: accent, label: "Accent colour (buttons and links)", widget: color}
+          - {name: fonts, label: Font style, widget: select, options: [Classic serif, Modern clean, Elegant, Editorial, Friendly]}
+      - name: carousel
+        label: Homepage carousel (3-6 photos)
+        file: data/carousel.json
+        fields:
+          - name: slides
+            label: Photos
+            widget: list
+            min: 1
+            max: 6
+            fields:
+              - {name: image, label: Photo, widget: image}
+              - {name: alt, label: Short description, widget: string}
+              - {name: position, label: "Focus (optional): which part to keep in view when cropped, e.g. center 20% keeps the top, center 80% keeps the bottom", widget: string, required: false}
+      - name: portfolio
+        label: Portfolio albums
+        file: data/portfolio.json
+        fields:
+          - name: albums
+            label: Albums
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {name: title, label: Album name, widget: string}
+              - name: photos
+                label: Photos
+                widget: list
+                fields:
+                  - {name: image, label: Photo, widget: image}
+                  - {name: caption, label: Caption shown on the photo (optional), widget: string, required: false}
+                  - {name: alt, label: "Hidden description for screen readers", widget: string}
+                  - {name: wide, label: Show larger (landscape photos), widget: boolean, default: false, required: false}
+      - name: services
+        label: Services & specials
+        file: data/services.json
+        fields:
+          - name: specials
+            label: Session specials (delete all to hide the section)
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {name: title, label: Name, widget: string}
+              - {name: price, label: Price, widget: string}
+              - {name: description, label: What's included, widget: string}
+              - {name: dates, label: Dates and location (optional), widget: string, required: false}
+              - {name: session, label: Session type, widget: select, options: [Wedding, Event, Headshots, Family session, Other portraits]}
+          - {name: travel_note, label: "Where do sessions take place?", widget: text}

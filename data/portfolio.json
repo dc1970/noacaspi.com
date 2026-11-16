@@ -1,0 +1,106 @@
+{
+ "albums": [
+  {
+   "title": "Weddings",
+   "photos": [
+    {
+     "image": "images/wedding-1.jpg",
+     "alt": "Bride in a white dress holding a bouquet in a park gazebo"
+    },
+    {
+     "image": "images/wedding-2.jpg",
+     "alt": "Couple kissing during an outdoor ceremony as guests applaud",
+     "wide": true
+    },
+    {
+     "image": "images/wedding-3.jpg",
+     "alt": "Couple laughing together on a park bench"
+    },
+    {
+     "image": "images/wedding-4.jpg",
+     "alt": "Couple smiling together in a gazebo"
+    },
+    {
+     "image": "images/wedding-5.jpg",
+     "alt": "Groom in a dark suit standing by a tree"
+    },
+    {
+     "image": "images/wedding-8.jpg",
+     "alt": "Couple sitting together on a bench by the lake"
+    }
+   ]
+  },
+  {
+   "title": "Headshots",
+   "photos": [
+    {
+     "image": "images/headshots-1.jpg",
+     "alt": "Headshot of a young woman in a green cardigan and glasses, outdoors by the water"
+    },
+    {
+     "image": "images/headshots-2.jpg",
+     "alt": "Portrait of a young woman leaning on a railing by the lake"
+    },
+    {
+     "image": "images/headshots-4.jpg",
+     "alt": "Portrait of a man sitting on a railing by the lake"
+    }
+   ]
+  },
+  {
+   "title": "Events",
+   "photos": [
+    {
+     "image": "images/events-1.jpg",
+     "alt": "Speaker at a podium on stage at a conference",
+     "wide": true
+    },
+    {
+     "image": "images/events-2.jpg",
+     "alt": "Conference attendees watching a session from the audience",
+     "wide": true
+    },
+    {
+     "image": "images/events-3.jpg",
+     "alt": "Attendees chatting during a conference break",
+     "wide": true
+    },
+    {
+     "image": "images/events-4.jpg",
+     "alt": "Women in conversation among conference attendees",
+     "wide": true
+    },
+    {
+     "image": "images/events-6.jpg",
+     "alt": "Attendees visiting an information table at a conference",
+     "wide": true
+    },
+    {
+     "image": "images/events-7.jpg",
+     "alt": "Audience members seated during a conference presentation",
+     "wide": true
+    },
+    {
+     "image": "images/events-8.jpg",
+     "alt": "Presenter pointing to a slide during a conference session",
+     "wide": true
+    },
+    {
+     "image": "images/events-9.jpg",
+     "alt": "Attendees viewing posters at a conference",
+     "wide": true
+    },
+    {
+     "image": "images/events-12.jpg",
+     "alt": "Ballroom filled with conference attendees at round tables",
+     "wide": true
+    },
+    {
+     "image": "images/events-13.jpg",
+     "alt": "Performers on stage at a conference",
+     "wide": true
+    }
+   ]
+  }
+ ]
+}
