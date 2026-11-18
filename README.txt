@@ -19,5 +19,5 @@ Resize photos to about 2000px wide first so pages stay fast.
 
 NOTES
 - The site loads its content from data/*.json, so it must be hosted. Opening index.html straight from your computer won't show content.
-- Inquiry form: submit one test after going live, then click the FormSubmit activation link emailed to noa.caspi4@gmail.com.
+- Inquiry form: submit one test after going live, then click the FormSubmit activation link emailed to noa@noacaspi.com.
 - Set your Instagram handle in admin > Business info.
