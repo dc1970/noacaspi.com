@@ -36,15 +36,23 @@ if($('#hero'))loads.push(get('carousel').then(d=>{
   hero.querySelector('.prev').onclick=()=>go(i-1);hero.querySelector('.next').onclick=()=>go(i+1);go(0);
 }).catch(()=>{}));
 
-// Gallery albums
+// Gallery: album covers on gallery.html, one album's photos on gallery.html?album=<name>
 if($('#gallery'))loads.push(get('portfolio').then(d=>{
-  const f=$('.filters'),g=$('.grid');
-  const all=el('button','on','All');all.dataset.f='all';f.append(all);
-  d.albums.forEach((a,i)=>{const b=el('button','',a.title);b.dataset.f=i;f.append(b);
-    (a.photos||[]).forEach(p=>{const t=el('div','tile'+(p.wide?' wide':''));t.dataset.c=i;t.style.backgroundImage=url(p.image);t.setAttribute('role','img');t.setAttribute('aria-label',p.alt||p.caption||a.title);if(p.caption)t.append(el('span','cap',p.caption));g.append(t)})});
-  f.onclick=e=>{const b=e.target.closest('button');if(!b)return;
-    [...f.children].forEach(x=>x.classList.toggle('on',x===b));
-    [...g.children].forEach(t=>t.hidden=b.dataset.f!=='all'&&t.dataset.c!==b.dataset.f)};
+  const slug=t=>(t||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const g=$('.grid'),h=$('#gallery-title'),back=$('.back');
+  const want=new URLSearchParams(location.search).get('album');
+  const a=want&&d.albums.find(x=>slug(x.title)===want);
+  if(a){
+    h.textContent=a.title;document.title=a.title+' | '+document.title;back.hidden=false;
+    (a.photos||[]).forEach(p=>{const t=el('div','tile'+(p.wide?' wide':''));t.style.backgroundImage=url(p.image);t.setAttribute('role','img');t.setAttribute('aria-label',p.alt||p.caption||a.title);if(p.caption)t.append(el('span','cap',p.caption));g.append(t)});
+  }else{
+    g.className='albums';
+    d.albums.forEach(x=>{const cover=x.cover||(x.photos&&x.photos[0]&&x.photos[0].image);
+      const c=el('a','album');c.href='gallery.html?album='+slug(x.title);
+      const i=el('div','cover');if(cover)i.style.backgroundImage=url(cover);
+      const n=(x.photos||[]).length;
+      c.append(i,el('h3','',x.title),el('span','count',n+(n===1?' photo':' photos')));g.append(c)});
+  }
 }).catch(()=>{}));
 
 // Services: specials + pricing, each linked to the inquiry form

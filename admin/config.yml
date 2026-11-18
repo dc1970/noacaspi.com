@@ -62,6 +62,7 @@ collections:
             summary: "{{fields.title}}"
             fields:
               - {name: title, label: Album name, widget: string}
+              - {name: cover, label: "Cover photo (optional - the first photo is used if empty)", widget: image, required: false}
               - name: photos
                 label: Photos
                 widget: list
