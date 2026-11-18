@@ -36,8 +36,8 @@ if($('#hero'))loads.push(get('carousel').then(d=>{
   hero.querySelector('.prev').onclick=()=>go(i-1);hero.querySelector('.next').onclick=()=>go(i+1);go(0);
 }).catch(()=>{}));
 
-// Portfolio albums
-if($('#portfolio'))loads.push(get('portfolio').then(d=>{
+// Gallery albums
+if($('#gallery'))loads.push(get('portfolio').then(d=>{
   const f=$('.filters'),g=$('.grid');
   const all=el('button','on','All');all.dataset.f='all';f.append(all);
   d.albums.forEach((a,i)=>{const b=el('button','',a.title);b.dataset.f=i;f.append(b);

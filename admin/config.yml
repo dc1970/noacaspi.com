@@ -27,7 +27,7 @@ collections:
           - {name: services_cta, label: Services page button text, widget: string}
           - {name: footer_line, label: Footer areas line, widget: string}
           - {name: nav_about, label: Menu label - About, widget: string}
-          - {name: nav_portfolio, label: Menu label - Portfolio, widget: string}
+          - {name: nav_portfolio, label: Menu label - Gallery, widget: string}
           - {name: nav_services, label: Menu label - Services, widget: string}
           - {name: nav_contact, label: Menu label - Contact, widget: string}
           - {name: nav_instagram, label: Menu label - Instagram, widget: string}
@@ -53,7 +53,7 @@ collections:
               - {name: alt, label: Short description, widget: string}
               - {name: position, label: "Focus (optional): which part to keep in view when cropped, e.g. center 20% keeps the top, center 80% keeps the bottom", widget: string, required: false}
       - name: portfolio
-        label: Portfolio albums
+        label: Gallery albums
         file: data/portfolio.json
         fields:
           - name: albums
