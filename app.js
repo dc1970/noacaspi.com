@@ -36,6 +36,23 @@ if($('#hero'))loads.push(get('carousel').then(d=>{
   hero.querySelector('.prev').onclick=()=>go(i-1);hero.querySelector('.next').onclick=()=>go(i+1);go(0);
 }).catch(()=>{}));
 
+// Pop-up photo viewer: returns show(n), which opens photo n over the page
+function lightbox(ps,title){
+  const box=el('dialog','lightbox'),fig=el('figure'),img=el('img'),cap=el('figcaption');
+  const x=el('button','lb-close','\u00d7'),pv=el('button','lb-prev','\u2039'),nx=el('button','lb-next','\u203a');
+  x.setAttribute('aria-label','Close');pv.setAttribute('aria-label','Previous photo');nx.setAttribute('aria-label','Next photo');
+  pv.hidden=nx.hidden=ps.length<2;fig.append(img,cap);box.append(x,fig,pv,nx);document.body.append(box);
+  let k=0;
+  const show=n=>{k=(n+ps.length)%ps.length;const p=ps[k];img.src=p.image;img.alt=p.alt||p.caption||title;cap.textContent=p.caption||'';cap.hidden=!p.caption;if(!box.open)box.showModal()};
+  pv.onclick=()=>show(k-1);nx.onclick=()=>show(k+1);x.onclick=()=>box.close();
+  box.onclick=e=>{if(e.target===box||e.target===fig)box.close()};
+  box.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(k-1);if(e.key==='ArrowRight')show(k+1)});
+  let sx=null;
+  box.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+  box.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50&&ps.length>1)show(k+(dx<0?1:-1));sx=null});
+  return show;
+}
+
 // Gallery: album covers on gallery.html, one album's photos on gallery.html?album=<name>
 if($('#gallery'))loads.push(get('portfolio').then(d=>{
   const slug=t=>(t||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -44,7 +61,8 @@ if($('#gallery'))loads.push(get('portfolio').then(d=>{
   const a=want&&d.albums.find(x=>slug(x.title)===want);
   if(a){
     h.textContent=a.title;document.title=a.title+' | '+document.title;back.hidden=false;
-    (a.photos||[]).forEach(p=>{const t=el('div','tile'+(p.wide?' wide':''));t.style.backgroundImage=url(p.image);t.setAttribute('role','img');t.setAttribute('aria-label',p.alt||p.caption||a.title);if(p.caption)t.append(el('span','cap',p.caption));g.append(t)});
+    const ps=a.photos||[],lb=lightbox(ps,a.title);
+    ps.forEach((p,k)=>{const t=el('button','tile'+(p.wide?' wide':''));t.type='button';t.style.backgroundImage=url(p.image);t.setAttribute('aria-label','View larger: '+(p.alt||p.caption||a.title));if(p.caption)t.append(el('span','cap',p.caption));t.onclick=()=>lb(k);g.append(t)});
   }else{
     g.className='albums';
     d.albums.forEach(x=>{const cover=x.cover||(x.photos&&x.photos[0]&&x.photos[0].image);
