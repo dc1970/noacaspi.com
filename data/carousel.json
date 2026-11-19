@@ -6,18 +6,13 @@
       "position": "center 50%"
     },
     {
-      "image": "images/headshots-4.jpg",
-      "alt": "Portrait of a man sitting on a railing by the lake",
-      "position": "center 20%"
+      "image": "images/wedding-4.jpg",
+      "alt": "Couple smiling together in a gazebo",
+      "position": "center 55%"
     },
     {
       "image": "/images/landscape.jpg",
       "alt": "Arctic landscape"
-    },
-    {
-      "image": "images/wedding-4.jpg",
-      "alt": "Couple smiling together in a gazebo",
-      "position": "center 55%"
     },
     {
       "image": "images/events-13.jpg",
@@ -27,6 +22,10 @@
     {
       "image": "/images/wolf.jpg",
       "alt": "Arctic wolf"
+    },
+    {
+      "image": "/images/wedding-2.jpg",
+      "alt": "Wedding ceremony "
     }
   ]
 }
