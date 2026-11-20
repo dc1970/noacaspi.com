@@ -1,7 +1,16 @@
 const $=s=>document.querySelector(s);
 const get=n=>fetch('data/'+n+'.json').then(r=>{if(!r.ok)throw 0;return r.json()});
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
-const url=p=>'url("'+encodeURI(p)+'")';
+// Photos are served through Netlify's Image CDN, which resizes them for each screen
+// and converts them to a lighter format. The uploaded originals are never changed.
+// pic(path,'big') = full-screen size, pic(path) = gallery thumbnail size.
+const CDN=!/^(localhost|127\.0\.0\.1|)$/.test(location.hostname);
+const STEPS=[400,800,1200,1600,2000,2400],DPR=Math.min(devicePixelRatio||1,3);
+const fit=px=>STEPS.find(w=>w>=px)||2400;
+const pic=(p,big)=>{if(!p)return'';if(!CDN||/^(https?:|data:)/.test(p))return encodeURI(p);
+  const w=big?fit(Math.max(screen.width,screen.height)*DPR):fit(Math.min(innerWidth,600)*DPR);
+  return '/.netlify/images?url='+encodeURIComponent('/'+p.replace(/^\/+/,''))+'&w='+w+'&q='+(big?85:75)};
+const url=s=>'url("'+s+'")';
 const book=(s,p)=>'index.html?session='+encodeURIComponent(s||'')+'&package='+encodeURIComponent(p||'')+'#contact';
 function prefill(s,p){const f=$('form');if(!f)return;
   if(s)[...f.session.options].forEach(o=>{if(o.text===s)f.session.value=o.value});
@@ -21,14 +30,14 @@ loads.push(get('settings').then(s=>{
     $('#about-title').textContent=s.about_title;
     const box=$('#about-text');box.replaceChildren(...s.about_text.split(/\n\s*\n/).map(t=>el('p','',t)));
     $('#about-note').textContent=s.about_note;
-    if(s.about_photo)$('.portrait').style.backgroundImage=url(s.about_photo)+',linear-gradient(160deg,#B9C2BA,#8E9B94)';
+    if(s.about_photo)$('.portrait').style.backgroundImage=url(pic(s.about_photo))+',linear-gradient(160deg,#B9C2BA,#8E9B94)';
   }
 }).catch(()=>{}));
 
 // Carousel
 if($('#hero'))loads.push(get('carousel').then(d=>{
   const hero=$('#hero'),box=hero.querySelector('.dots'),at=hero.querySelector('.hero-text');
-  const slides=d.slides.map(s=>{const e=el('div','slide');e.style.backgroundImage=url(s.image)+',linear-gradient(135deg,#6F7F78,#2C3A3A)';if(s.position)e.style.backgroundPosition=s.position;e.setAttribute('role','img');e.setAttribute('aria-label',s.alt||'Photo');hero.insertBefore(e,at);return e});
+  const slides=d.slides.map(s=>{const e=el('div','slide');e.style.backgroundImage=url(pic(s.image,'big'))+',linear-gradient(135deg,#6F7F78,#2C3A3A)';if(s.position)e.style.backgroundPosition=s.position;e.setAttribute('role','img');e.setAttribute('aria-label',s.alt||'Photo');hero.insertBefore(e,at);return e});
   if(!slides.length)return;
   let i=0,timer;
   const dots=slides.map((_,n)=>{const b=el('button');b.setAttribute('aria-label','Photo '+(n+1));b.onclick=()=>go(n);box.append(b);return b});
@@ -43,7 +52,7 @@ function lightbox(ps,title){
   x.setAttribute('aria-label','Close');pv.setAttribute('aria-label','Previous photo');nx.setAttribute('aria-label','Next photo');
   pv.hidden=nx.hidden=ps.length<2;fig.append(img,cap);box.append(x,fig,pv,nx);document.body.append(box);
   let k=0;
-  const show=n=>{k=(n+ps.length)%ps.length;const p=ps[k];img.src=p.image;img.alt=p.alt||p.caption||title;cap.textContent=p.caption||'';cap.hidden=!p.caption;if(!box.open)box.showModal()};
+  const show=n=>{k=(n+ps.length)%ps.length;const p=ps[k];img.onerror=()=>{img.onerror=null;img.src=encodeURI(p.image)};img.src=pic(p.image,'big');img.alt=p.alt||p.caption||title;cap.textContent=p.caption||'';cap.hidden=!p.caption;if(!box.open)box.showModal()};
   pv.onclick=()=>show(k-1);nx.onclick=()=>show(k+1);x.onclick=()=>box.close();
   box.onclick=e=>{if(e.target===box||e.target===fig)box.close()};
   box.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(k-1);if(e.key==='ArrowRight')show(k+1)});
@@ -62,12 +71,12 @@ if($('#gallery'))loads.push(get('portfolio').then(d=>{
   if(a){
     h.textContent=a.title;document.title=a.title+' | '+document.title;back.hidden=false;
     const ps=a.photos||[],lb=lightbox(ps,a.title);
-    ps.forEach((p,k)=>{const t=el('button','tile'+(p.wide?' wide':''));t.type='button';t.style.backgroundImage=url(p.image);t.setAttribute('aria-label','View larger: '+(p.alt||p.caption||a.title));if(p.caption)t.append(el('span','cap',p.caption));t.onclick=()=>lb(k);g.append(t)});
+    ps.forEach((p,k)=>{const t=el('button','tile'+(p.wide?' wide':''));t.type='button';t.style.backgroundImage=url(pic(p.image));t.setAttribute('aria-label','View larger: '+(p.alt||p.caption||a.title));if(p.caption)t.append(el('span','cap',p.caption));t.onclick=()=>lb(k);g.append(t)});
   }else{
     g.className='albums';
     d.albums.forEach(x=>{const cover=x.cover||(x.photos&&x.photos[0]&&x.photos[0].image);
       const c=el('a','album');c.href='gallery.html?album='+slug(x.title);
-      const i=el('div','cover');if(cover)i.style.backgroundImage=url(cover);
+      const i=el('div','cover');if(cover)i.style.backgroundImage=url(pic(cover));
       const n=(x.photos||[]).length;
       c.append(i,el('h3','',x.title),el('span','count',n+(n===1?' photo':' photos')));g.append(c)});
   }
