@@ -1,31 +1,31 @@
 {
   "slides": [
     {
-      "image": "images/events-2.jpg",
+      "image": "/images/events-2.jpg",
       "alt": "Conference attendees watching a session from the audience",
       "position": "center 50%"
     },
     {
-      "image": "images/wedding-4.jpg",
+      "image": "/images/wedding-4.jpg",
       "alt": "Couple smiling together in a gazebo",
       "position": "center 55%"
     },
     {
       "image": "/images/landscape.jpg",
-      "alt": "Arctic landscape"
+      "alt": "Small hikers silhouetted along the ridge of pale silt hills under a bright blue sky"
     },
     {
-      "image": "images/events-13.jpg",
+      "image": "/images/events-13.jpg",
       "alt": "Performers on stage at a conference",
       "position": "center 40%"
     },
     {
       "image": "/images/wolf.jpg",
-      "alt": "Arctic wolf"
+      "alt": "White Arctic wolf with a bloodstained muzzle looking back at the camera on the tundra"
     },
     {
       "image": "/images/wedding-2.jpg",
-      "alt": "Wedding ceremony "
+      "alt": "Couple kissing during an outdoor ceremony as guests applaud"
     }
   ]
 }
