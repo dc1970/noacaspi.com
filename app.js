@@ -103,6 +103,12 @@ const FONTS={'Classic serif':['Fraunces','Karla','Fraunces:opsz,wght@9..144,300;
 'Elegant':['Cormorant Garamond','Lato','Cormorant+Garamond:wght@400;600','Lato:wght@400;700'],
 'Editorial':['Playfair Display','Source Sans 3','Playfair+Display:wght@400;600','Source+Sans+3:wght@400;700'],
 'Friendly':['DM Serif Display','DM Sans','DM+Serif+Display','DM+Sans:wght@400;700']};
+// The pages load no fonts of their own: only the font style picked in the Theme is downloaded
+// (Classic serif if none is set or the theme can't be read).
+function useFonts(name){const f=FONTS[name]||FONTS['Classic serif'],r=document.documentElement.style;
+  const l=document.createElement('link');l.rel='stylesheet';
+  l.href='https://fonts.googleapis.com/css2?family='+f[2]+'&family='+f[3]+'&display=swap';loads.push(new Promise(ok=>{l.onload=l.onerror=ok}));document.head.append(l);
+  r.setProperty('--head',"'"+f[0]+"'");r.setProperty('--body',"'"+f[1]+"'")}
 loads.push(get('theme').then(t=>{
   const r=document.documentElement.style,hex=/^#[0-9a-f]{6}$/i;
   if(hex.test(t.background))r.setProperty('--paper',t.background);
@@ -110,12 +116,8 @@ loads.push(get('theme').then(t=>{
   if(hex.test(t.accent)){r.setProperty('--accent',t.accent);
     const n=parseInt(t.accent.slice(1),16),L=(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))/255;
     r.setProperty('--on-accent',L>0.6?'#111':'#fff')}
-  const f=FONTS[t.fonts];
-  if(f&&t.fonts!=='Classic serif'){
-    const l=document.createElement('link');l.rel='stylesheet';
-    l.href='https://fonts.googleapis.com/css2?family='+f[2]+'&family='+f[3]+'&display=swap';loads.push(new Promise(ok=>{l.onload=l.onerror=ok}));document.head.append(l);
-    r.setProperty('--head',"'"+f[0]+"'");r.setProperty('--body',"'"+f[1]+"'")}
-}).catch(()=>{}));
+  useFonts(t.fonts);
+}).catch(()=>useFonts()));
 
 // Land on #anchor: the browser jumps to e.g. #contact before the albums and
 // text above it have loaded, so it ends up in the gallery once they push it down.
