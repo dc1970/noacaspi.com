@@ -54,7 +54,11 @@ function lightbox(ps,title){
   let k=0,swap=false;
   const still=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
   // fade the new photo in once it has loaded (only when switching photos, not on first open)
-  img.onload=()=>{if(swap&&!still())img.animate([{opacity:0,transform:'scale(.95)'},{opacity:1,transform:'none'}],{duration:450,easing:'ease-out'});swap=false};
+  img.onload=()=>{if(swap&&!still())img.animate([{opacity:0,transform:'scale(.95)'},{opacity:1,transform:'none'}],{duration:450,easing:'ease-out'});swap=false;
+    if(ps.length>1){preload(k+1);preload(k-1);preload(k+2)}};
+  // download the photos either side of the current one in the background, so swiping to them is instant
+  const cache={};
+  const preload=n=>{n=(n+ps.length)%ps.length;if(cache[n])return;const im=new Image();im.decoding='async';im.src=pic(ps[n].image,'big');cache[n]=im};
   const show=n=>{k=(n+ps.length)%ps.length;const p=ps[k];swap=box.open;img.onerror=()=>{img.onerror=null;img.src=encodeURI(p.image)};img.src=pic(p.image,'big');img.alt=p.alt||p.caption||title;cap.textContent=p.caption||'';cap.hidden=!p.caption;if(!box.open){box.classList.remove('closing');box.showModal()}};
   // play the closing animation, then actually close
   const close=()=>{if(!box.open||box.classList.contains('closing'))return;box.classList.add('closing');setTimeout(()=>{box.close();box.classList.remove('closing')},still()?0:400)};
