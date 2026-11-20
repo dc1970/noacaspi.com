@@ -50,13 +50,22 @@ button.tile{display:block;width:100%;border:0;padding:0;font:inherit;cursor:zoom
 button.tile:hover{filter:brightness(.92)}
 /* pop-up photo viewer */
 html:has(.lightbox[open]){overflow:hidden}
-.lightbox{width:100vw;height:100vh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(12,14,14,.95);color:#fff}
+.lightbox{width:100vw;height:100vh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(12,14,14,.6);color:#fff}
+.lightbox[open]{animation:lb-in .5s ease}
+.lightbox.closing{animation:lb-out .4s ease forwards}
+.lightbox[open] img{animation:lb-pop .6s cubic-bezier(.2,.8,.2,1)}
+.lightbox.closing img{animation:lb-pop-out .4s ease forwards}
+@keyframes lb-in{from{opacity:0}}
+@keyframes lb-out{to{opacity:0}}
+@keyframes lb-pop{from{opacity:0;transform:scale(.5)}}
+@keyframes lb-pop-out{to{opacity:0;transform:scale(.5)}}
+@media(prefers-reduced-motion:reduce){.lightbox,.lightbox img{animation:none!important}}
 .lightbox::backdrop{background:transparent}
 .lightbox figure{position:absolute;inset:3.5rem 5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem}
-.lightbox img{max-width:100%;max-height:100%;min-height:0;object-fit:contain;flex:0 1 auto}
-.lightbox figcaption{font-size:.95rem;opacity:.85;text-align:center}
-.lb-close,.lb-prev,.lb-next{position:absolute;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:1.9rem;line-height:1;cursor:pointer}
-.lb-close:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.28)}
+.lightbox img{max-width:100%;max-height:100%;min-height:0;object-fit:contain;flex:0 1 auto;box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.lightbox figcaption{font-size:.95rem;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.lb-close,.lb-prev,.lb-next{position:absolute;width:48px;height:48px;border:0;border-radius:50%;background:rgba(0,0,0,.4);color:#fff;font-size:1.9rem;line-height:1;cursor:pointer}
+.lb-close:hover,.lb-prev:hover,.lb-next:hover{background:rgba(0,0,0,.65)}
 .lb-close{top:1rem;right:1rem}
 .lb-prev,.lb-next{top:50%;transform:translateY(-50%)}
 .lb-prev{left:1rem}.lb-next{right:1rem}
