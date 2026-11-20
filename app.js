@@ -51,24 +51,24 @@ function lightbox(ps,title){
   const x=el('button','lb-close','\u00d7'),pv=el('button','lb-prev','\u2039'),nx=el('button','lb-next','\u203a');
   x.setAttribute('aria-label','Close');pv.setAttribute('aria-label','Previous photo');nx.setAttribute('aria-label','Next photo');
   pv.hidden=nx.hidden=ps.length<2;fig.append(img,cap);box.append(x,fig,pv,nx);document.body.append(box);
-  let k=0,swap=false;
+  let k=0,swap=false,dir=0;
   const still=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
   // fade the new photo in once it has loaded (only when switching photos, not on first open)
-  img.onload=()=>{if(swap&&!still())img.animate([{opacity:0,transform:'scale(.95)'},{opacity:1,transform:'none'}],{duration:450,easing:'ease-out'});swap=false;
+  img.onload=()=>{if(swap&&!still())img.animate([{opacity:0,transform:`translateX(${dir*25}%)`},{opacity:1,transform:'none'}],{duration:350,easing:'ease-out'});swap=false;
     if(ps.length>1){preload(k+1);preload(k-1);preload(k+2)}};
   // download the photos either side of the current one in the background, so swiping to them is instant
   const cache={};
   const preload=n=>{n=(n+ps.length)%ps.length;if(cache[n])return;const im=new Image();im.decoding='async';im.src=pic(ps[n].image,'big');cache[n]=im};
-  const show=n=>{k=(n+ps.length)%ps.length;const p=ps[k];swap=box.open;img.onerror=()=>{img.onerror=null;img.src=encodeURI(p.image)};img.src=pic(p.image,'big');img.alt=p.alt||p.caption||title;cap.textContent=p.caption||'';cap.hidden=!p.caption;if(!box.open){box.classList.remove('closing');box.showModal()}};
+  const show=(n,d=0)=>{dir=d;k=(n+ps.length)%ps.length;const p=ps[k];swap=box.open;img.onerror=()=>{img.onerror=null;img.src=encodeURI(p.image)};img.src=pic(p.image,'big');img.alt=p.alt||p.caption||title;cap.textContent=p.caption||'';cap.hidden=!p.caption;if(!box.open){box.classList.remove('closing');box.showModal()}};
   // play the closing animation, then actually close
   const close=()=>{if(!box.open||box.classList.contains('closing'))return;box.classList.add('closing');setTimeout(()=>{box.close();box.classList.remove('closing')},still()?0:400)};
-  pv.onclick=()=>show(k-1);nx.onclick=()=>show(k+1);x.onclick=close;
+  pv.onclick=()=>show(k-1,-1);nx.onclick=()=>show(k+1,1);x.onclick=close;
   box.addEventListener('cancel',e=>{e.preventDefault();close()});
   box.onclick=e=>{if(e.target===box||e.target===fig)close()};
-  box.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(k-1);if(e.key==='ArrowRight')show(k+1)});
+  box.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(k-1,-1);if(e.key==='ArrowRight')show(k+1,1)});
   let sx=null;
   box.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
-  box.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50&&ps.length>1)show(k+(dx<0?1:-1));sx=null});
+  box.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50&&ps.length>1)show(k+(dx<0?1:-1),dx<0?1:-1);sx=null});
   return show;
 }
 
